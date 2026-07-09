@@ -248,18 +248,7 @@
             background: rgba(255,105,180,0.2);
             border-color: rgba(255,150,190,0.9); color: #fff;
         }
-        #message-card::before {
-            content: ''; position: absolute; top: -12px; left: 50%;
-            transform: translateX(-50%);
-            width: 24px; height: 22px;
-            background: radial-gradient(circle at 30% 35%, rgba(255,105,180,0.9), rgba(200,50,100,0.8));
-            clip-path: path('M12 20.5C12 20.5 2 13.5 2 7.5C2 4.5 4.5 2 7.5 2C9.5 2 11 3.5 12 4.5C13 3.5 14.5 2 16.5 2C19.5 2 22 4.5 22 7.5C22 13.5 12 20.5 12 20.5Z');
-            animation: sparkle 2s ease-in-out infinite;
-        }
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
-            50%  { opacity: 1; transform: translateX(-50%) scale(1.2); }
-        }
+        
 
         /* sticker gif */
         #sticker-wrap {
@@ -1388,13 +1377,11 @@
                     
                     // เล่นเพลง — audio ถูก unlock ไว้แล้วตอน touchstart/mousedown
                     const bgMusic = document.getElementById('backgroundMusic');
-                    if (bgMusic) {
+                    if (bgMusic && bgMusic.paused) {
                         bgMusic.muted = false;
                         bgMusic.volume = 0.5;
-                        bgMusic.currentTime = 0;
                         bgMusic.play().catch(err => {
                             console.log("Music play failed:", err);
-                            // ลองอีกครั้งด้วย user interaction ที่ยังค้างอยู่
                             document.addEventListener('touchend', function retryPlay() {
                                 bgMusic.play().catch(() => {});
                                 document.removeEventListener('touchend', retryPlay);
