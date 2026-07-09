@@ -249,9 +249,11 @@
             border-color: rgba(255,150,190,0.9); color: #fff;
         }
         #message-card::before {
-            content: '❤️'; position: absolute; top: -10px; left: 50%;
-            transform: translateX(-50%); font-size: 24px;
-            color: rgba(255,105,180,0.8);
+            content: ''; position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%);
+            width: 24px; height: 22px;
+            background: radial-gradient(circle at 30% 35%, rgba(255,105,180,0.9), rgba(200,50,100,0.8));
+            clip-path: path('M12 20.5C12 20.5 2 13.5 2 7.5C2 4.5 4.5 2 7.5 2C9.5 2 11 3.5 12 4.5C13 3.5 14.5 2 16.5 2C19.5 2 22 4.5 22 7.5C22 13.5 12 20.5 12 20.5Z');
             animation: sparkle 2s ease-in-out infinite;
         }
         @keyframes sparkle {
@@ -1279,6 +1281,12 @@
             experienceStarted = true;
             experienceStartMs = performance.now();
             startOverlay.classList.add('hidden');
+            // ซ่อน heart-runner ไม่ให้ลอยค้างหลังเข้าหน้ากาแลคซี่
+            const runner = document.querySelector('.heart-runner');
+            if (runner) {
+                runner.style.opacity = '0';
+                runner.style.transform = 'translate(-50%, -50%) scale(0.001)';
+            }
             // เพลงถูกเปิดแล้วตอนกดหัวใจครบ — ไม่ต้อง play ซ้ำ
             window.dispatchEvent(new CustomEvent('experienceStarted'));
         };
